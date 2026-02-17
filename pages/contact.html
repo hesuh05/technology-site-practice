@@ -32,24 +32,26 @@
         /* ====== FORMULARIO (AGREGADO) ====== */
 
         .field-group {
-    display: flex;
-    flex-direction: column;
-}
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
 
-.error-message {
-    color: #ff3b3b;
-    font-size: 0.9rem;
-    margin-bottom: 0.3rem;
-    min-height: 18px;
-}
+        .error-message {
+            color: #ff3b3b;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            min-height: 18px;
+        }
 
 
         #contact-form-container {
             width: 400px;
-            background: rgba(0,0,0,0.6);
-            padding: 2rem;
+            background: linear-gradient(#282828,#393A29);
+            padding: 2rem 3rem;
             border-radius: 20px;
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 20px 5px black;
+            /* box-shadow: 0 0 40px rgba(255, 215, 0, 0.3); */
             margin: 3rem 0;
         }
 
@@ -102,8 +104,8 @@
             text-align: center;
             margin-top: 0.5rem;
         }
-        /* ====== FIN FORMULARIO ====== */
 
+        /* ====== FIN FORMULARIO ====== */
     </style>
 </head>
 
@@ -154,7 +156,8 @@
     <div id="main">
         <div id="main-wrapper">
             <div id="breadcrumb">
-                <p style="margin: 0;color:white">🏠 Inicio > <span style="font-weight: bold;view-transition-name: contact-title;">Contacto</span></p>
+                <p style="margin: 0;color:white">🏠 Inicio > <span
+                        style="font-weight: bold;view-transition-name: contact-title;">Contacto</span></p>
             </div>
             <div id="content">
                 <h1 style="font-size: 3rem;color: white;font-weight: normal;">Contacto</h1>
@@ -192,32 +195,60 @@
 
                     <form id="contact-form" novalidate>
 
-    <div class="field-group">
-        <div class="error-message" id="email-error"></div>
-        <input type="email" id="email" placeholder="correo@gmail.com">
-    </div>
+                        <div class="field-group">
+                            <div class="error-message" id="email-error"></div>
+                            <input type="email" id="email" placeholder="correo@gmail.com">
+                        </div>
 
-    <div class="field-group">
-        <div class="error-message" id="tipo-error"></div>
-        <select id="tipo">
-            <option value="">Tipo</option>
-            <option value="Desarrollo Web">Desarrollo Web</option>
-            <option value="Consultoría">Consultoría</option>
-            <option value="Otros">Otros</option>
-        </select>
-    </div>
+                        <div class="field-group">
+                            <div class="error-message" id="tipo-error"></div>
+                            <select id="tipo">
+                                <option value="">Tipo</option>
+                                <option value="Desarrollo Web">Desarrollo Web</option>
+                                <option value="Consultoría">Consultoría</option>
+                                <option value="Otros">Otros</option>
+                            </select>
+                        </div>
 
-    <div class="field-group">
-        <div class="error-message" id="descripcion-error"></div>
-        <textarea id="descripcion"
-            placeholder="Háblanos brevemente sobre lo que necesitas. (Máximo 350 caracteres)"
-            ></textarea>
-        <div id="char-counter">0 / 350</div>
-    </div>
+                        <div class="field-group">
+                            <div class="error-message" id="descripcion-error"></div>
+                            <textarea id="descripcion"
+                                placeholder="Háblanos brevemente sobre lo que necesitas. (Máximo 350 caracteres)"
+                                maxlength="350"></textarea>
+                            <div id="char-counter">0 / 350</div>
+                        </div>
 
-    <button type="submit">Enviar</button>
+                        <!-- Verificador humano -->
+                        <div class="field-group">
+                            
+                            
+                                <label for="pregunta" style="text-align: center;">
+                                    Pregunta de seguridad: 
+                                    ¿Cuánto es 7 + 5?
+                                </label>
+                                <br>
+                                <div class="error-message" id="pregunta-error"></div>
+                                <input type="number" 
+                                       id="pregunta" 
+                                       name="pregunta" 
+                                       style="
+                                       background: black;
+                                        border: none;
+                                        padding: 0.8rem;
+                                        color: white;
+                                        border-radius: 6px;
+                                        outline: none;
+                                        font-size: 1rem;
+                                       "
+                                       placeholder="Tu respuesta"                                       
+                                       required>
+                            
+                        </div>
+                        <br>
 
-</form>
+                        <button type="submit">Enviar</button>
+
+                    </form>
 
                 </div>
                 <!-- ===== FIN FORMULARIO ===== -->
@@ -299,66 +330,78 @@
 
         /* ===== VALIDACIONES FORMULARIO (AGREGADO) ===== */
         const form = document.getElementById("contact-form");
-const emailInput = document.getElementById("email");
-const tipoInput = document.getElementById("tipo");
-const descripcionInput = document.getElementById("descripcion");
+        const emailInput = document.getElementById("email");
+        const tipoInput = document.getElementById("tipo");
+        const descripcionInput = document.getElementById("descripcion");
 
-const emailError = document.getElementById("email-error");
-const tipoError = document.getElementById("tipo-error");
-const descripcionError = document.getElementById("descripcion-error");
+        const emailError = document.getElementById("email-error");
+        const tipoError = document.getElementById("tipo-error");
+        const descripcionError = document.getElementById("descripcion-error");
+        const preguntaInput = document.getElementById('pregunta');
+        const preguntaError = document.getElementById('pregunta-error');
 
-const counter = document.getElementById("char-counter");
+        const counter = document.getElementById("char-counter");
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Contador
-descripcionInput.addEventListener("input", () => {
-    counter.textContent = `${descripcionInput.value.length} / 350`;
-});
+        // Contador
+        descripcionInput.addEventListener("input", () => {
+            counter.textContent = `${descripcionInput.value.length} / 350`;
+        });
 
-// Validación
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
+        // Validación
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
 
-    let isValid = true;
+            let isValid = true;
 
-    // Limpiar errores
-    emailError.textContent = "";
-    tipoError.textContent = "";
-    descripcionError.textContent = "";
+            // Limpiar errores
+            emailError.textContent = "";
+            tipoError.textContent = "";
+            descripcionError.textContent = "";
 
-    // Email vacío
-    if (emailInput.value.trim() === "") {
-        emailError.textContent = "Este campo es obligatorio";
-        isValid = false;
-    }
-    else if (!emailRegex.test(emailInput.value.trim())) {
-        emailError.textContent = "El correo electrónico no está en el formato correcto";
-        isValid = false;
-    }
+            // Email vacío
+            if (emailInput.value.trim() === "") {
+                emailError.textContent = "Este campo es obligatorio";
+                isValid = false;
+            }
+            else if (!emailRegex.test(emailInput.value.trim())) {
+                emailError.textContent = "El correo electrónico no está en el formato correcto";
+                isValid = false;
+            }
 
-    // Dropdown
-    if (tipoInput.value === "") {
-        tipoError.textContent = "Este campo es obligatorio";
-        isValid = false;
-    }
+            // Dropdown
+            if (tipoInput.value === "") {
+                tipoError.textContent = "Este campo es obligatorio";
+                isValid = false;
+            }
 
-    // Descripción
-    if (descripcionInput.value.trim() === "") {
-        descripcionError.textContent = "Este campo es obligatorio";
-        isValid = false;
-    }
-    else if (descripcionInput.value.length > 350) {
-        descripcionError.textContent = "Límite de carácteres excedido ("+descripcionInput.value.length+" carácteres)";
-        isValid = false;
-    }
+            // Descripción
+            if (descripcionInput.value.trim() === "") {
+                descripcionError.textContent = "Este campo es obligatorio";
+                isValid = false;
+            }
+            else if (descripcionInput.value.length > 350) {
+                descripcionError.textContent = "Límite de carácteres excedido (" + descripcionInput.value.length + " carácteres)";
+                isValid = false;
+            }
 
-    if (isValid) {
-        form.reset();
-        counter.textContent = "0 / 350";
-        alert("Formulario enviado correctamente.");
-    }
-});
+            // Verificación humana
+            if (preguntaInput.value.trim() === "") {
+                preguntaError.textContent = "Este campo es obligatorio";
+                isValid = false;
+            } else if (parseInt(preguntaInput.value, 10) !== 12) {
+                preguntaError.textContent = "Respuesta incorrecta";
+                isValid = false;
+            }
+
+            if (isValid) {
+                form.reset();
+                counter.textContent = "0 / 350";
+                alert("Formulario enviado correctamente.");
+                console.log('Usuario verificado');
+            }
+        });
 
 
     </script>
