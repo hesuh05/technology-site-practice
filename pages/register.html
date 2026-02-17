@@ -66,12 +66,20 @@
         .action-link:hover {
             text-decoration: underline;
         }
+
+        /* ===== ERRORES ===== */
+        .error-message {
+            color: #ff3b3b;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            min-height: 18px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div id="main">
 
-        <!-- Logo + redirect to home -->
         <div id="logo-header" onclick="window.location.href='../index.html'">
             <img src="../logo.png" height="85">
             <h1 style="font-weight: normal; color: white;">devSignature</h1>
@@ -79,34 +87,38 @@
 
         <h1 style="color:white;font-weight:normal">Registro</h1>
 
-        <form id="form-register" action="" method="get" onsubmit="event.preventDefault()">
+        <form id="form-register">
 
             <div class="field-wrapper">
+                <div class="error-message" id="name-error"></div>
                 <label style="font-size: 1.5rem; text-align: center;">
                     Nombre completo:
                 </label>
-                <input type="text" name="name" required>
+                <input type="text" id="name">
             </div>
 
             <div class="field-wrapper">
+                <div class="error-message" id="email-error"></div>
                 <label style="font-size: 1.5rem; text-align: center;">
                     Correo electrónico:
                 </label>
-                <input type="email" name="email" required>
+                <input type="email" id="email">
             </div>
 
             <div class="field-wrapper">
+                <div class="error-message" id="password-error"></div>
                 <label style="font-size: 1.5rem; text-align: center;">
                     Contraseña:
                 </label>
-                <input type="password" name="password" required>
+                <input type="password" id="password">
             </div>
 
             <div class="field-wrapper">
+                <div class="error-message" id="confirm-error"></div>
                 <label style="font-size: 1.5rem; text-align: center;">
                     Confirmar contraseña:
                 </label>
-                <input type="password" name="confirm_password" required>
+                <input type="password" id="confirm_password">
             </div>
 
             <button style="
@@ -121,7 +133,6 @@
                 Crear cuenta
             </button>
 
-            <!-- Links -->
             <a href="./login.html" class="action-link">
                 ¿Ya tienes cuenta? Inicia sesión
             </a>
@@ -132,5 +143,71 @@
 
         </form>
     </div>
+
+    <script>
+        const form = document.getElementById("form-register");
+
+        const nameInput = document.getElementById("name");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const confirmInput = document.getElementById("confirm_password");
+
+        const nameError = document.getElementById("name-error");
+        const emailError = document.getElementById("email-error");
+        const passwordError = document.getElementById("password-error");
+        const confirmError = document.getElementById("confirm-error");
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Mínimo 8 caracteres, 1 mayúscula, 1 número, 1 símbolo
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            let isValid = true;
+
+            nameError.textContent = "";
+            emailError.textContent = "";
+            passwordError.textContent = "";
+            confirmError.textContent = "";
+
+            if (nameInput.value.trim() === "") {
+                nameError.textContent = "Este campo es obligatorio";
+                isValid = false;
+            }
+
+            if (emailInput.value.trim() === "") {
+                emailError.textContent = "Este campo es obligatorio";
+                isValid = false;
+            } else if (!emailRegex.test(emailInput.value.trim())) {
+                emailError.textContent = "El correo electrónico no está en el formato correcto";
+                isValid = false;
+            }
+
+            if (passwordInput.value.trim() === "") {
+                passwordError.textContent = "Este campo es obligatorio";
+                isValid = false;
+            } else if (!passwordRegex.test(passwordInput.value)) {
+                passwordError.textContent =
+                    "Debe tener mínimo 8 caracteres, una mayúscula, un número y un símbolo";
+                isValid = false;
+            }
+
+            if (confirmInput.value.trim() === "") {
+                confirmError.textContent = "Este campo es obligatorio";
+                isValid = false;
+            } else if (confirmInput.value !== passwordInput.value) {
+                confirmError.textContent = "Las contraseñas no coinciden";
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert("Registro válido (simulado).");
+                form.reset();
+            }
+        });
+    </script>
+
 </body>
 </html>
