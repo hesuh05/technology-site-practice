@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>devSignature | Servicios</title>
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        #content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            row-gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        #service-cards-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            width: 100%;
+        }
+
+        .service-card {
+            width: 45%;
+            padding: 2rem;
+            border-radius: 1.5rem;
+
+            display: flex;
+            flex-direction: column;
+            min-height: 420px;
+        }
+
+        .service-content {
+            flex: 1;
+        }
+
+        .service-card h2 {
+            color: white;
+            font-size: 2.2rem;
+            font-weight: normal;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            color: #EDEDED;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .price-box {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+        }
+
+        .price-label {
+            font-size: .9rem;
+            margin: 0;
+        }
+
+        .price-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin: .3rem 0;
+        }
+
+        .price-note {
+            font-size: .8rem;
+            margin: 0;
+        }
+
+        .cta {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .cta p {
+            color: #EDEDED;
+            margin-bottom: 1rem;
+        }
+
+        .cta button {
+            background-color: #F1C40F;
+            color: black;
+            font-size: 1.1rem;
+            padding: 1rem 3rem;
+            border-radius: 2rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(241, 196, 15, .6);
+            transition: all ease-in-out .15s;
+        }
+
+        .cta button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(241, 196, 15, .6);
+        }
+
+        /* Colores individuales */
+        .web {
+            background-color: #425C36;
+        }
+
+        .web .price-box {
+            background-color: #6F8F5A;
+            color: #10250B;
+        }
+
+        .consulting {
+            background-color: #5C3658;
+        }
+
+        .consulting .price-box {
+            background-color: #7E567A;
+            color: #1E0F1C;
+        }
+
+        /* Responsive */
+        @media(max-width: 900px) {
+            #service-cards-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .service-card {
+                width: 85%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <script src="../script.js"></script>
+
+    <div id="navbar">
+        <div class="navbar-brand">
+            <a href="/" style="display:flex; align-items:center;">
+                <img src="../logo.png" height="85">
+            </a>
+
+            <a href="/" style="text-decoration:none;">
+                <h1 style="font-weight:normal;color:white;">
+                    devSignature
+                </h1>
+            </a>
+        </div>
+
+        <!-- 🔍 BUSCADOR INTERNO -->
+        <div class="navbar-search">
+            <span class="search-icon" onclick="goToAdvancedSearch()">🔍</span>
+            <input type="text" id="site-search" placeholder="Buscar en el sitio..." oninput="searchSite()" />
+            <div id="search-results"></div>
+        </div>
+
+        <!-- 👇 ANTES: button + changePath -->
+        <!-- 👇 AHORA: a.navbar-button -->
+
+        <a class="navbar-button" href="/pages/about_us.html">
+            Sobre Nosotros
+        </a>
+
+        <a class="navbar-button" href="/pages/services.html">
+            Servicios
+        </a>
+
+        <div class="navbar-dropdown">
+            <button class="navbar-button">Mas</button>
+
+            <div class="navbar-dropdown-menu">
+                <a class="navbar-button" href="/pages/login.html">
+                    <span class="dropdown-text">Iniciar Sesion</span>
+                </a>
+
+                <a class="navbar-button" href="/pages/contact.html">
+                    <span class="dropdown-text">Contacto</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="main">
+        <div id="main-wrapper">
+
+            <div id="breadcrumb">
+                <p style="margin:0;color:white;">🏠 Inicio > <b>Servicios</b></p>
+            </div>
+
+            <div id="content">
+
+                <h1 style="font-size:3rem;color:white;font-weight:normal">Servicios</h1>
+
+                <p style="font-size:1.4rem;color:#EDEDED;text-align:center;max-width:70%;">
+                    Soluciones digitales diseñadas para mejorar la experiencia del usuario
+                    y la eficiencia operativa de tu negocio.
+                </p>
+
+                <hr width="90%" color="#FFFFFF">
+
+                <div id="service-cards-wrapper">
+
+                    <!-- Web -->
+                    <div class="service-card web">
+                        <div class="service-content">
+                            <h2 style="text-align: center;">Web Development</h2>
+                            <p>
+                                Nos encargamos del diseño y desarrollo de sitios web modernos,
+                                rápidos y accesibles, enfocados en una experiencia de usuario
+                                clara y efectiva.
+                            </p>
+                        </div>
+
+                        <div class="price-box">
+                            <p class="price-label">Precio desde</p>
+                            <p class="price-value">$2,000 MXN</p>
+                            <p class="price-note">NOTA: El precio aumenta dependiendo de la complejidad del sitio</p>
+                        </div>
+                    </div>
+
+                    <!-- Consulting -->
+                    <div class="service-card consulting">
+                        <div class="service-content">
+                            <h2 style="text-align: center;">Consultoría</h2>
+                            <p>
+                                Acompañamos a las empresas en la toma de decisiones tecnológicas
+                                mediante análisis claros y estratégicos.
+                            </p>
+                        </div>
+
+                        <div class="price-box">
+                            <p class="price-label">Precio desde</p>
+                            <p class="price-value">$500 MXN</p>
+                            <p class="price-note">NOTA: El precio aumenta dependiendo de la complejidad del sitio</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="cta">
+                    <p>¿Tienes alguna duda o estás interesado en los servicios?</p>
+                    <button onclick='changePath("http://127.0.0.1:5500/pages/contact.html")'>
+                        Contáctanos
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+        <script>
+        // === ÍNDICE DEL SITIO ===
+        const siteIndex = [
+            {
+                title: "Inicio",
+                description: "Página principal con una visión general de devSignature.",
+                keywords: "inicio home principal",
+                url: "http://127.0.0.1:5500"
+            },
+            {
+                title: "Sobre Nosotros",
+                description: "Nuestra misión, visión y el equipo detrás de devSignature.",
+                keywords: "about us nosotros empresa misión visión equipo",
+                url: "http://127.0.0.1:5500/pages/about_us.html"
+            },
+            {
+                title: "Servicios",
+                description: "Desarrollo web y consultoría tecnológica profesional.",
+                keywords: "servicios desarrollo web soporte consultoría precios",
+                url: "http://127.0.0.1:5500/pages/services.html"
+            },
+            {
+                title: "Contacto",
+                description: "Formas de comunicarte con nosotros y solicitar soporte.",
+                keywords: "contacto email soporte ayuda",
+                url: "http://127.0.0.1:5500/pages/contact.html"
+            }
+        ];
+
+
+        // === FUNCIÓN DE BÚSQUEDA ===
+        function searchSite() {
+            const input = document.getElementById("site-search");
+            const resultsBox = document.getElementById("search-results");
+            const query = input.value.toLowerCase();
+
+            resultsBox.innerHTML = "";
+            resultsBox.style.display = "none";
+
+            if (!query) return;
+
+            const results = siteIndex.filter(page =>
+                page.title.toLowerCase().includes(query) ||
+                page.keywords.includes(query)
+            );
+
+            if (!results.length) return;
+
+            resultsBox.style.display = "block";
+
+            results.forEach(page => {
+                const div = document.createElement("div");
+                div.className = "search-item";
+                div.innerHTML = `
+  <strong>${page.title}</strong>
+  <div style="font-size:.9rem; opacity:.8;">
+    ${page.description}
+  </div>
+`;
+
+                div.onclick = () => window.location.href = page.url;
+                resultsBox.appendChild(div);
+            });
+        }
+
+        // === CERRAR RESULTADOS AL HACER CLICK FUERA ===
+        document.addEventListener("click", e => {
+            const search = document.querySelector(".navbar-search");
+            if (search && !search.contains(e.target)) {
+                const box = document.getElementById("search-results");
+                if (box) box.style.display = "none";
+            }
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>devSignature</title>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        #content {
+            display: flex;
+            flex: 1;
+            row-gap: 1.5rem;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #content>* {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="./script.js" defer></script>
+
+    <div id="navbar">
+        <div class="navbar-brand">
+            <a href="/" style="display:flex; align-items:center;">
+                <img src="./logo.png" height="85">
+            </a>
+
+            <a href="/" style="text-decoration:none;">
+                <h1 style="font-weight:normal;color:white;">
+                    devSignature
+                </h1>
+            </a>
+        </div>
+
+        <!-- 🔍 BUSCADOR INTERNO -->
+        <div class="navbar-search">
+            <span class="search-icon" onclick="goToAdvancedSearch()">🔍</span>
+            <input type="text" id="site-search" placeholder="Buscar en el sitio..." oninput="searchSite()" />
+            <div id="search-results"></div>
+        </div>
+
+        <!-- 👇 ANTES: button + changePath -->
+        <!-- 👇 AHORA: a.navbar-button -->
+
+        <a class="navbar-button" href="/pages/about_us.html">
+            Sobre Nosotros
+        </a>
+
+        <a class="navbar-button" href="/pages/services.html">
+            Servicios
+        </a>
+
+        <div class="navbar-dropdown">
+            <button class="navbar-button">Mas</button>
+
+            <div class="navbar-dropdown-menu">
+                <a class="navbar-button" href="/pages/login.html">
+                    <span class="dropdown-text">Iniciar Sesion</span>
+                </a>
+
+                <a class="navbar-button" href="/pages/contact.html">
+                    <span class="dropdown-text">Contacto</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="main">
+        <div id="main-wrapper">
+            <div id="breadcrumb">
+                <p style="margin: 0;color:white">🏠 Inicio</p>
+            </div>
+
+            <div id="content">
+                <div></div>
+                <h1 style="
+                    font-size: 3rem;
+                    color: white;
+                    font-weight: normal;
+                    text-align: center;
+                    max-width: 100%;
+                ">
+                    Soluciones digitales que impulsan tu negocio
+                </h1>
+
+                <p style="
+                    font-size: 1.4rem;
+                    color: #EDEDED;
+                    text-align: center;
+                    max-width: 100%;
+                ">
+                    Creamos experiencias web modernas, eficientes y escalables,
+                    alineadas con los objetivos reales de tu empresa.
+                </p>
+
+                <hr size="1" width="85%" color="#FFFFFF">
+
+                <h2 style="font-size: 2rem; color: white; font-weight: normal;">
+                    Lo que hacemos
+                </h2>
+
+                <ul style="
+                    width: 80%;
+                    color: #EDEDED;
+                    font-size: 1.3rem;
+                ">
+                    <li>Diseño y desarrollo de sitios web profesionales</li>
+                    <li>Aplicaciones web a medida y escalables</li>
+                    <li>Consultoría tecnológica y optimización de procesos</li>
+                    <li>Soporte, mantenimiento y mejora continua</li>
+                </ul>
+
+                <!-- CTA -->
+                <p style="
+                    font-size: 1.3rem;
+                    color: #EDEDED;
+                    text-align: center;
+                    max-width: 70%;
+                ">
+                    ¿Tienes una idea o proyecto en mente?
+                </p>
+
+                <a href="/pages/contact.html" style="
+    background-color:#DAB900;
+    color:white;
+    font-size:1.4rem;
+    padding:1rem 2rem;
+    text-decoration:none;
+    display:inline-block;
+">
+                    Hablemos
+                </a>
+
+
+            </div>
+        </div>
+    </div>
+    <script>
+        // === ÍNDICE DEL SITIO ===
+        const siteIndex = [
+            {
+                title: "Inicio",
+                description: "Página principal con una visión general de devSignature.",
+                keywords: "inicio home principal",
+                url: "http://127.0.0.1:5500"
+            },
+            {
+                title: "Sobre Nosotros",
+                description: "Nuestra misión, visión y el equipo detrás de devSignature.",
+                keywords: "about us nosotros empresa misión visión equipo",
+                url: "http://127.0.0.1:5500/pages/about_us.html"
+            },
+            {
+                title: "Servicios",
+                description: "Desarrollo web y consultoría tecnológica profesional.",
+                keywords: "servicios desarrollo web soporte consultoría precios",
+                url: "http://127.0.0.1:5500/pages/services.html"
+            },
+            {
+                title: "Contacto",
+                description: "Formas de comunicarte con nosotros y solicitar soporte.",
+                keywords: "contacto email soporte ayuda",
+                url: "http://127.0.0.1:5500/pages/contact.html"
+            }
+        ];
+
+
+        // === FUNCIÓN DE BÚSQUEDA ===
+        function searchSite() {
+            const input = document.getElementById("site-search");
+            const resultsBox = document.getElementById("search-results");
+            const query = input.value.toLowerCase();
+
+            resultsBox.innerHTML = "";
+            resultsBox.style.display = "none";
+
+            if (!query) return;
+
+            const results = siteIndex.filter(page =>
+                page.title.toLowerCase().includes(query) ||
+                page.keywords.includes(query)
+            );
+
+            if (!results.length) return;
+
+            resultsBox.style.display = "block";
+
+            results.forEach(page => {
+                const div = document.createElement("div");
+                div.className = "search-item";
+                div.innerHTML = `
+  <strong>${page.title}</strong>
+  <div style="font-size:.9rem; opacity:.8;">
+    ${page.description}
+  </div>
+`;
+
+                div.onclick = () => window.location.href = page.url;
+                resultsBox.appendChild(div);
+            });
+        }
+
+        // === CERRAR RESULTADOS AL HACER CLICK FUERA ===
+        document.addEventListener("click", e => {
+            const search = document.querySelector(".navbar-search");
+            if (search && !search.contains(e.target)) {
+                const box = document.getElementById("search-results");
+                if (box) box.style.display = "none";
+            }
+        });
+
+    </script>
+</body>
+
+</html>

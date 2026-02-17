@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>devSignature | Registro</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: "Instrument Sans";
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+
+        #main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            background-color: #282828;
+        }
+
+        #logo-header {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        #form-register {
+            display: flex;
+            flex-direction: column;
+            row-gap: 2rem;
+            background-color: #1D1D1D;
+            padding: 4rem;
+            min-width: 400px;
+        }
+
+        .field-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .field-wrapper input {
+            background-color: #101010;
+            border: none;
+            color: rgb(212, 212, 212);
+            font-size: 1.5rem;
+            height: 2.5rem;
+        }
+
+        .action-link {
+            text-align: center;
+            color: #D4BD38;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .action-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+
+        <!-- Logo + redirect to home -->
+        <div id="logo-header" onclick="window.location.href='../index.html'">
+            <img src="../logo.png" height="85">
+            <h1 style="font-weight: normal; color: white;">devSignature</h1>
+        </div>
+
+        <h1 style="color:white;font-weight:normal">Registro</h1>
+
+        <form id="form-register" action="" method="get" onsubmit="event.preventDefault()">
+
+            <div class="field-wrapper">
+                <label style="font-size: 1.5rem; text-align: center;">
+                    Nombre completo:
+                </label>
+                <input type="text" name="name" required>
+            </div>
+
+            <div class="field-wrapper">
+                <label style="font-size: 1.5rem; text-align: center;">
+                    Correo electrónico:
+                </label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div class="field-wrapper">
+                <label style="font-size: 1.5rem; text-align: center;">
+                    Contraseña:
+                </label>
+                <input type="password" name="password" required>
+            </div>
+
+            <div class="field-wrapper">
+                <label style="font-size: 1.5rem; text-align: center;">
+                    Confirmar contraseña:
+                </label>
+                <input type="password" name="confirm_password" required>
+            </div>
+
+            <button style="
+                color: white;
+                border: none;
+                background-color: #DAB900;
+                padding: 1.25rem 1.5rem;
+                border-radius: .5rem;
+                font-size: 1.5rem;
+                cursor: pointer;
+            ">
+                Crear cuenta
+            </button>
+
+            <!-- Links -->
+            <a href="./login.html" class="action-link">
+                ¿Ya tienes cuenta? Inicia sesión
+            </a>
+
+            <a href="../index.html" class="action-link">
+                ← Volver al inicio
+            </a>
+
+        </form>
+    </div>
+</body>
+</html>

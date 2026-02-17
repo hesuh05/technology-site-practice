@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>devSignature – Búsqueda Avanzada</title>
+
+    <!-- ESTILOS GLOBALES -->
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        /* =========================
+           CONTENT
+        ========================== */
+        #content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            row-gap: 1.4rem;
+            height: 95%;
+        }
+
+        #content>* {
+            margin: 0;
+        }
+
+        /* =========================
+           FILTERS
+        ========================== */
+        .filters-header {
+            width: 90%;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: flex-end;
+
+            background-color: #1f1f1f;
+            padding: 1rem 1.2rem;
+            border-radius: 10px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            min-width: 160px;
+        }
+
+        .filter-group label {
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 0.45rem 0.6rem;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+            background-color: #2a2a2a;
+            color: white;
+        }
+
+        .filter-group.keyword {
+            flex: 1;
+            min-width: 240px;
+        }
+
+        /* =========================
+           RESULTS
+        ========================== */
+        .results-container {
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+            min-height: 60vh;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .result-card {
+            background-color: #1f1f1f;
+            padding: 1.4rem;
+            border-radius: 10px;
+            border-left: 4px solid #DAB900;
+            cursor: pointer;
+            transition: background-color 0.15s ease, transform 0.15s ease;
+        }
+
+        .result-card:hover {
+            background-color: #262626;
+            transform: translateY(-2px);
+        }
+
+        .result-card h3 {
+            margin: 0;
+            font-size: 1.35rem;
+            font-weight: normal;
+            color: white;
+        }
+
+        .result-card p {
+            margin-top: 0.4rem;
+            font-size: 1.05rem;
+            color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SCRIPTS GLOBALES -->
+    <script src="../script.js"></script>
+
+    <!-- NAVBAR (SIN CAMBIOS) -->
+    <div id="navbar">
+        <div class="navbar-brand">
+            <a href="/" style="display:flex; align-items:center;">
+                <img src="../logo.png" height="85">
+            </a>
+
+            <a href="/" style="text-decoration:none;">
+                <h1 style="font-weight:normal;color:white;">
+                    devSignature
+                </h1>
+            </a>
+        </div>
+
+        <div class="navbar-search">
+            <span class="search-icon" onclick="goToAdvancedSearch()">🔍</span>
+            <input type="text" id="site-search" placeholder="Buscar en el sitio..." oninput="searchSite()" />
+            <div id="search-results"></div>
+        </div>
+
+        <a class="navbar-button" href="/pages/about_us.html">Sobre Nosotros</a>
+        <a class="navbar-button" href="/pages/services.html">Servicios</a>
+
+        <div class="navbar-dropdown">
+            <button class="navbar-button">Mas</button>
+            <div class="navbar-dropdown-menu">
+                <a class="navbar-button" href="/pages/login.html">Iniciar Sesion</a>
+                <a class="navbar-button" href="/pages/contact.html">Contacto</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN -->
+    <div id="main">
+        <div id="main-wrapper">
+
+            <div id="breadcrumb">
+                <p style="margin:0;color:white">
+                    🏠 Inicio › <span style="font-weight:bold;">Búsqueda Avanzada</span>
+                </p>
+            </div>
+
+            <div id="content">
+
+                <h1 style="font-size:3rem;color:white;font-weight:normal;">
+                    Búsqueda Avanzada
+                </h1>
+
+                <p style="font-size:1.5rem;color:#EDEDED;text-align:center;width:90%;">
+                    Explora todo el contenido del sitio usando filtros avanzados.
+                </p>
+
+                <!-- FILTERS -->
+                <div class="filters-header">
+
+                    <div class="filter-group">
+                        <label>Tipo</label>
+                        <select id="typeFilter" onchange="applyFilters()">
+                            <option value="all">Todo</option>
+                            <option value="page">Páginas</option>
+                            <option value="service">Servicios</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Sección</label>
+                        <select id="sectionFilter" onchange="applyFilters()">
+                            <option value="all">Todas</option>
+                            <option value="home">Inicio</option>
+                            <option value="about">Sobre Nosotros</option>
+                            <option value="services">Servicios</option>
+                            <option value="contact">Contacto</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label>Detalle</label>
+                        <select id="detailFilter" onchange="applyFilters()">
+                            <option value="all">Todos</option>
+                            <option value="general">General</option>
+                            <option value="detailed">Detallado</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group keyword">
+                        <label>Palabras clave</label>
+                        <input id="keywordFilter" type="text"
+                            placeholder="Ej. desarrollo, soporte"
+                            oninput="applyFilters()">
+                    </div>
+                </div>
+
+                <!-- RESULTS -->
+                <div id="results" class="results-container"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const data = [
+            {
+                title: "Inicio",
+                description: "Página principal del sitio.",
+                type: "page",
+                section: "home",
+                detail: "general",
+                keywords: "inicio home",
+                url: "/"
+            },
+            {
+                title: "Sobre Nosotros",
+                description: "Nuestra misión, visión y equipo.",
+                type: "page",
+                section: "about",
+                detail: "general",
+                keywords: "about misión visión",
+                url: "/pages/about_us.html"
+            },
+            {
+                title: "Servicios",
+                description: "Todos nuestros servicios.",
+                vn:"service-title",
+                type: "page",
+                section: "services",
+                detail: "general",
+                keywords: "servicios desarrollo precios",
+                url: "/pages/services.html"
+            },
+            {
+                title: "Desarrollo Web",
+                description: "Sitios web modernos y escalables.",
+                type: "service",
+                section: "services",
+                detail: "detailed",
+                keywords: "desarrollo web",
+                url: "/pages/services.html"
+            },
+            {
+                title: "Consultoría",
+                description: "Asesoría tecnológica.",
+                type: "service",
+                section: "services",
+                detail: "general",
+                keywords: "consultoría soporte",
+                url: "/pages/services.html"
+            },
+            {
+                title: "Contacto",
+                description: "Canales de contacto.",
+                type: "page",
+                section: "contact",
+                detail: "general",
+                keywords: "contacto email",
+                url: "/pages/contact.html"
+            }
+        ];
+
+        function renderResults(list) {
+            const container = document.getElementById("results");
+            container.innerHTML = "";
+
+            if (!list.length) {
+                container.innerHTML = "<p style='color:#ccc'>No se encontraron resultados.</p>";
+                return;
+            }
+
+            list.forEach(item => {
+                const card = document.createElement("div");
+                card.className = "result-card";
+                card.onclick = () => window.location.href = item.url;
+
+                card.innerHTML = `
+                    <h3 ${!!item?.vn?'style="view-transition-name:'+item.vn+'"':''}>${item.title}</h3>
+                    <p>${item.description}</p>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function applyFilters() {
+            const type = document.getElementById("typeFilter").value;
+            const section = document.getElementById("sectionFilter").value;
+            const detail = document.getElementById("detailFilter").value;
+            const keyword = document.getElementById("keywordFilter").value.toLowerCase();
+
+            const filtered = data.filter(item =>
+                (type === "all" || item.type === type) &&
+                (section === "all" || item.section === section) &&
+                (detail === "all" || item.detail === detail) &&
+                (!keyword || item.keywords.includes(keyword))
+            );
+
+            renderResults(filtered);
+        }
+
+        renderResults(data);
+
+                // === ÍNDICE DEL SITIO ===
+        const siteIndex = [
+            {
+                title: "Inicio",
+                description: "Página principal con una visión general de devSignature.",
+                keywords: "inicio home principal",
+                url: "http://127.0.0.1:5500"
+            },
+            {
+                title: "Sobre Nosotros",
+                description: "Nuestra misión, visión y el equipo detrás de devSignature.",
+                keywords: "about us nosotros empresa misión visión equipo",
+                url: "http://127.0.0.1:5500/pages/about_us.html"
+            },
+            {
+                title: "Servicios",
+                description: "Desarrollo web y consultoría tecnológica profesional.",
+                keywords: "servicios desarrollo web soporte consultoría precios",
+                url: "http://127.0.0.1:5500/pages/services.html"
+            },
+            {
+                title: "Contacto",
+                description: "Formas de comunicarte con nosotros y solicitar soporte.",
+                keywords: "contacto email soporte ayuda",
+                url: "http://127.0.0.1:5500/pages/contact.html"
+            }
+        ];
+
+
+        // === FUNCIÓN DE BÚSQUEDA ===
+        function searchSite() {
+            const input = document.getElementById("site-search");
+            const resultsBox = document.getElementById("search-results");
+            const query = input.value.toLowerCase();
+
+            resultsBox.innerHTML = "";
+            resultsBox.style.display = "none";
+
+            if (!query) return;
+
+            const results = siteIndex.filter(page =>
+                page.title.toLowerCase().includes(query) ||
+                page.keywords.includes(query)
+            );
+
+            if (!results.length) return;
+
+            resultsBox.style.display = "block";
+
+            results.forEach(page => {
+                const div = document.createElement("div");
+                div.className = "search-item";
+                div.innerHTML = `
+  <strong>${page.title}</strong>
+  <div style="font-size:.9rem; opacity:.8;">
+    ${page.description}
+  </div>
+`;
+
+                div.onclick = () => window.location.href = page.url;
+                resultsBox.appendChild(div);
+            });
+        }
+
+        // === CERRAR RESULTADOS AL HACER CLICK FUERA ===
+        document.addEventListener("click", e => {
+            const search = document.querySelector(".navbar-search");
+            if (search && !search.contains(e.target)) {
+                const box = document.getElementById("search-results");
+                if (box) box.style.display = "none";
+            }
+        });
+        
+    </script>
+
+</body>
+</html>

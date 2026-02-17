@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>devSignature</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        #content {
+            display: flex;
+            row-gap: 0.20rem;
+            flex-direction: column;
+            align-items: center;
+            height: 95%;
+        }
+
+        #content>* {
+            margin: 0;
+        }
+
+        .contact-label {
+            font-weight: bold;
+            color: white
+        }
+
+        .contact-value {
+            font-weight: normal;
+            color: white
+        }
+    </style>
+</head>
+
+<body>
+    <script src="../script.js"></script>
+    <div id="navbar">
+        <div class="navbar-brand">
+            <a href="/" style="display:flex; align-items:center;">
+                <img src="../logo.png" height="85">
+            </a>
+
+            <a href="/" style="text-decoration:none;">
+                <h1 style="font-weight:normal;color:white;">
+                    devSignature
+                </h1>
+            </a>
+        </div>
+
+        <!-- 🔍 BUSCADOR INTERNO -->
+        <div class="navbar-search">
+            <span class="search-icon" onclick="goToAdvancedSearch()">🔍</span>
+            <input type="text" id="site-search" placeholder="Buscar en el sitio..." oninput="searchSite()" />
+            <div id="search-results"></div>
+        </div>
+
+        <!-- 👇 ANTES: button + changePath -->
+        <!-- 👇 AHORA: a.navbar-button -->
+
+        <a class="navbar-button" href="/pages/about_us.html">
+            Sobre Nosotros
+        </a>
+
+        <a class="navbar-button" href="/pages/services.html">
+            Servicios
+        </a>
+
+        <div class="navbar-dropdown">
+            <button class="navbar-button">Mas</button>
+
+            <div class="navbar-dropdown-menu">
+                <a class="navbar-button" href="/pages/login.html">
+                    <span class="dropdown-text">Iniciar Sesion</span>
+                </a>
+
+                <a class="navbar-button" href="/pages/contact.html">
+                    <span class="dropdown-text">Contacto</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div id="main-wrapper">
+            <div id="breadcrumb">
+                <p style="margin: 0;color:white">🏠 Inicio > <span style="font-weight: bold;view-transition-name: contact-title;">Contacto</span></p>
+            </div>
+            <div id="content">
+                <h1 style="font-size: 3rem;color: white;font-weight: normal;">Contacto</h1>
+                <p style="font-size: 1.5rem;color:#EDEDED;text-align: center;">Si tienes dudas, deseas cotizar un
+                    proyecto o necesitas asesoría tecnológica, nuestro equipo está listo para apoyarte.</p>
+                <hr size="1" width="90%" color="#FFFFFF">
+                <h2 style="font-size: 2rem;color: white;font-weight: normal;">Información de Contacto</h2>
+                <ul style="width: 90%;">
+                    <li class="contact-label">Correo electrónico: <span class="contact-value">contacto@devsig.com</span>
+                    </li>
+                    <br>
+                    <li class="contact-label">Teléfono: <span class="contact-value">+52 55 1234 5678</span></li>
+                    <br>
+                    <li class="contact-label">Horario de atención: <span class="contact-value">Lunes a Viernes | 9:00
+                            a.m. - 6:00 p.m. (hora local)</span></li>
+                </ul>
+                <h2 style="font-size: 2rem;color: white;font-weight: normal;">¿En qué podemos ayudarte?</h2>
+                <p style="font-size: 1.5rem;color:#EDEDED;text-align: justify; width: 90%;">Puedes contactarnos para:
+                </p>
+                <ul style="width: 90%; color: #EDEDED;">
+                    <li>Desarrollo y rediseño de sitios web</li>
+                    <br>
+                    <li>Implementación de comercio electrónico</li>
+                    <br>
+                    <li>Consultoria tecnológica y análisis de procesos</li>
+                    <br>
+                    <li>Soporte y mantenimiento de soluciones digitales</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        // === ÍNDICE DEL SITIO ===
+        const siteIndex = [
+            {
+                title: "Inicio",
+                description: "Página principal con una visión general de devSignature.",
+                keywords: "inicio home principal",
+                url: "http://127.0.0.1:5500"
+            },
+            {
+                title: "Sobre Nosotros",
+                description: "Nuestra misión, visión y el equipo detrás de devSignature.",
+                keywords: "about us nosotros empresa misión visión equipo",
+                url: "http://127.0.0.1:5500/pages/about_us.html"
+            },
+            {
+                title: "Servicios",
+                description: "Desarrollo web y consultoría tecnológica profesional.",
+                keywords: "servicios desarrollo web soporte consultoría precios",
+                url: "http://127.0.0.1:5500/pages/services.html"
+            },
+            {
+                title: "Contacto",
+                description: "Formas de comunicarte con nosotros y solicitar soporte.",
+                keywords: "contacto email soporte ayuda",
+                url: "http://127.0.0.1:5500/pages/contact.html"
+            }
+        ];
+
+
+        // === FUNCIÓN DE BÚSQUEDA ===
+        function searchSite() {
+            const input = document.getElementById("site-search");
+            const resultsBox = document.getElementById("search-results");
+            const query = input.value.toLowerCase();
+
+            resultsBox.innerHTML = "";
+            resultsBox.style.display = "none";
+
+            if (!query) return;
+
+            const results = siteIndex.filter(page =>
+                page.title.toLowerCase().includes(query) ||
+                page.keywords.includes(query)
+            );
+
+            if (!results.length) return;
+
+            resultsBox.style.display = "block";
+
+            results.forEach(page => {
+                const div = document.createElement("div");
+                div.className = "search-item";
+                div.innerHTML = `
+  <strong>${page.title}</strong>
+  <div style="font-size:.9rem; opacity:.8;">
+    ${page.description}
+  </div>
+`;
+
+                div.onclick = () => window.location.href = page.url;
+                resultsBox.appendChild(div);
+            });
+        }
+
+        // === CERRAR RESULTADOS AL HACER CLICK FUERA ===
+        document.addEventListener("click", e => {
+            const search = document.querySelector(".navbar-search");
+            if (search && !search.contains(e.target)) {
+                const box = document.getElementById("search-results");
+                if (box) box.style.display = "none";
+            }
+        });
+
+    </script>
+</body>
+
+</html>

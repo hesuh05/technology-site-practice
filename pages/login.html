@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>devSignature</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+                @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: "Instrument Sans";
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: white;
+        }
+        #main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            background-color: #282828;
+        }
+        #logo-header{
+            display: flex;
+        }
+        #form-login{
+            display: flex;
+            flex-direction: column;
+            row-gap: 2rem;
+            background-color: #1D1D1D;
+            padding: 4rem;
+            min-width: 400px;
+        }
+        .field-wrapper{
+            display:flex;
+            flex-direction: column;
+        }
+                .action-link {
+            text-align: center;
+            color: #D4BD38;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .action-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="logo-header">
+            <img src="../logo.png" height="85" onclick='changePath("http://127.0.0.1:5500")' style="cursor: pointer;">
+            <h1 style="font-weight: normal;color:white;" onclick='changePath("http://127.0.0.1:5500")' style="cursor: pointer;">devSignature</h1>
+        </div>
+        <h1 style="color:white;font-weight:normal">Inició de Sesión</h1>
+        <form id="form-login" action="" method="get" onclick="(e)=>{e.preventDefault()}">
+            <div class="field-wrapper">
+                <label for="email" style="font-size: 1.5rem;text-align:center">Correo electrónico:</label>
+                <input type="email" name="email" style="background-color: #101010;border:none;color:rgb(212, 212, 212);font-size:1.5rem;height:2.5rem">
+            </div>
+            <div class="field-wrapper">
+                <label for="password" style="font-size: 1.5rem;text-align:center">Contraseña:</label>
+                <input type="email" name="password" style="background-color: #101010;border:none;color:rgb(212, 212, 212);font-size:1.5rem;height:2.5rem">
+            </div>
+            <button style="color: white;border:none;background-color:#DAB900;padding:1.25rem 1.5rem;border-radius:.5rem;font-size:1.5rem">Continuar</button>
+            <a href="./register.html" class="action-link">
+                ¿No tienes cuenta?
+            </a>
+
+            <a href="../index.html" class="action-link">
+                ← Volver al inicio
+            </a>
+        </form>
+    </div>
+</body>
+</html>

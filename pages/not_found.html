@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>devSignature</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+                @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: "Instrument Sans";
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: white;
+            background-color: #282828;
+        }
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            background-color: #D9D9D9;
+            height: 90%;
+            width: 95%;
+        }
+        #logo-header{
+            display: flex;
+        }
+        #form-login{
+            display: flex;
+            flex-direction: column;
+            row-gap: 2rem;
+            background-color: #1D1D1D;
+            padding: 4rem;
+            min-width: 400px;
+        }
+        .field-wrapper{
+            display:flex;
+            flex-direction: column;
+        }
+            .action-link {
+            text-align: center;
+            color: #D4BD38;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .action-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="logo-header">
+            <img src="../logo.png" height="85">
+            <h1 style="font-weight: normal;color:white;">devSignature</h1>
+        </div>
+        <h1 style="color:black;font-weight:normal;font-size:4rem;margin:0">404</h1>
+        <h2 style="color:black;font-weight:normal;font-size:2rem">Not found!</h2>
+        <p style="margin:0;color:black">Parece que estas perdido!</p>
+        <p style="margin:0;color:black">Presiona el siguiente boton para regresar al inicio.</p>
+        <button onclick="window.location.href='http:\/\/127.0.0.1:5500'" style="cursor:pointer;margin:2rem;color: white;border:none;background-color:#DAB900;padding:1.25rem 1.5rem;border-radius:.5rem;font-size:1.5rem">Regresar a Inicio</button>
+    </div>
+</body>
+</html>
