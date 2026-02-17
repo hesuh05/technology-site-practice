@@ -57,6 +57,18 @@
             height: 2.5rem;
         }
 
+        /* security question styling */
+        .verificacion {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .verificacion label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
         .action-link {
             text-align: center;
             color: #D4BD38;
@@ -123,6 +135,17 @@
                 <input type="password" id="confirm_password">
             </div>
 
+            <!-- Verificador humano -->
+            <div class="field-wrapper">
+                <div class="error-message" id="pregunta-error"></div>
+                <div class="verificacion">
+                    <label style="font-size: 1.5rem; text-align: center;">
+                        Pregunta de seguridad: ¿Cuánto es 7 + 5?
+                    </label>
+                    <input type="number" id="pregunta" name="pregunta">
+                </div>
+            </div>
+
             <button style="
                 color: white;
                 border: none;
@@ -158,11 +181,18 @@
         const emailError = document.getElementById("email-error");
         const passwordError = document.getElementById("password-error");
         const confirmError = document.getElementById("confirm-error");
+        const preguntaInput = document.getElementById('pregunta');
+        const preguntaError = document.getElementById('pregunta-error');
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         // Mínimo 8 caracteres, 1 mayúscula, 1 número, 1 símbolo
         const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+        // clear pregunta error
+        preguntaInput.addEventListener('input', () => {
+            if (preguntaError.textContent) preguntaError.textContent = '';
+        });
 
         form.addEventListener("submit", function (e) {
             e.preventDefault();
@@ -201,6 +231,15 @@
                 isValid = false;
             } else if (confirmInput.value !== passwordInput.value) {
                 confirmError.textContent = "Las contraseñas no coinciden";
+                isValid = false;
+            }
+
+            // human verification
+            if (preguntaInput.value.trim() === "") {
+                preguntaError.textContent = "Este campo es obligatorio";
+                isValid = false;
+            } else if (parseInt(preguntaInput.value,10) !== 12) {
+                preguntaError.textContent = "Respuesta incorrecta";
                 isValid = false;
             }
 
