@@ -28,6 +28,82 @@
             font-weight: normal;
             color: white
         }
+
+        /* ====== FORMULARIO (AGREGADO) ====== */
+
+        .field-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.error-message {
+    color: #ff3b3b;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+    min-height: 18px;
+}
+
+
+        #contact-form-container {
+            width: 400px;
+            background: rgba(0,0,0,0.6);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+            margin: 3rem 0;
+        }
+
+        #contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        #contact-form input,
+        #contact-form select,
+        #contact-form textarea {
+            background: black;
+            border: none;
+            padding: 0.8rem;
+            color: white;
+            border-radius: 6px;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        #contact-form textarea {
+            resize: none;
+            height: 120px;
+        }
+
+        #contact-form button {
+            background: gold;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        #contact-form button:hover {
+            background: #ffd700;
+            box-shadow: 0 0 20px gold;
+        }
+
+        #char-counter {
+            font-size: 0.8rem;
+            text-align: right;
+            color: #ccc;
+        }
+
+        #form-message {
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+        /* ====== FIN FORMULARIO ====== */
+
     </style>
 </head>
 
@@ -52,9 +128,6 @@
             <input type="text" id="site-search" placeholder="Buscar en el sitio..." oninput="searchSite()" />
             <div id="search-results"></div>
         </div>
-
-        <!-- 👇 ANTES: button + changePath -->
-        <!-- 👇 AHORA: a.navbar-button -->
 
         <a class="navbar-button" href="/pages/about_us.html">
             Sobre Nosotros
@@ -110,9 +183,49 @@
                     <br>
                     <li>Soporte y mantenimiento de soluciones digitales</li>
                 </ul>
+
+                <!-- ===== FORMULARIO AGREGADO ===== -->
+                <div id="contact-form-container">
+                    <h2 style="font-size: 2rem;color: white;font-weight: normal;">
+                        Envíanos un correo
+                    </h2>
+
+                    <form id="contact-form" novalidate>
+
+    <div class="field-group">
+        <div class="error-message" id="email-error"></div>
+        <input type="email" id="email" placeholder="correo@gmail.com">
+    </div>
+
+    <div class="field-group">
+        <div class="error-message" id="tipo-error"></div>
+        <select id="tipo">
+            <option value="">Tipo</option>
+            <option value="Desarrollo Web">Desarrollo Web</option>
+            <option value="Consultoría">Consultoría</option>
+            <option value="Otros">Otros</option>
+        </select>
+    </div>
+
+    <div class="field-group">
+        <div class="error-message" id="descripcion-error"></div>
+        <textarea id="descripcion"
+            placeholder="Háblanos brevemente sobre lo que necesitas. (Máximo 350 caracteres)"
+            ></textarea>
+        <div id="char-counter">0 / 350</div>
+    </div>
+
+    <button type="submit">Enviar</button>
+
+</form>
+
+                </div>
+                <!-- ===== FIN FORMULARIO ===== -->
+
             </div>
         </div>
     </div>
+
     <script>
         // === ÍNDICE DEL SITIO ===
         const siteIndex = [
@@ -142,8 +255,6 @@
             }
         ];
 
-
-        // === FUNCIÓN DE BÚSQUEDA ===
         function searchSite() {
             const input = document.getElementById("site-search");
             const resultsBox = document.getElementById("search-results");
@@ -178,7 +289,6 @@
             });
         }
 
-        // === CERRAR RESULTADOS AL HACER CLICK FUERA ===
         document.addEventListener("click", e => {
             const search = document.querySelector(".navbar-search");
             if (search && !search.contains(e.target)) {
@@ -186,6 +296,70 @@
                 if (box) box.style.display = "none";
             }
         });
+
+        /* ===== VALIDACIONES FORMULARIO (AGREGADO) ===== */
+        const form = document.getElementById("contact-form");
+const emailInput = document.getElementById("email");
+const tipoInput = document.getElementById("tipo");
+const descripcionInput = document.getElementById("descripcion");
+
+const emailError = document.getElementById("email-error");
+const tipoError = document.getElementById("tipo-error");
+const descripcionError = document.getElementById("descripcion-error");
+
+const counter = document.getElementById("char-counter");
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Contador
+descripcionInput.addEventListener("input", () => {
+    counter.textContent = `${descripcionInput.value.length} / 350`;
+});
+
+// Validación
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    let isValid = true;
+
+    // Limpiar errores
+    emailError.textContent = "";
+    tipoError.textContent = "";
+    descripcionError.textContent = "";
+
+    // Email vacío
+    if (emailInput.value.trim() === "") {
+        emailError.textContent = "Este campo es obligatorio";
+        isValid = false;
+    }
+    else if (!emailRegex.test(emailInput.value.trim())) {
+        emailError.textContent = "El correo electrónico no está en el formato correcto";
+        isValid = false;
+    }
+
+    // Dropdown
+    if (tipoInput.value === "") {
+        tipoError.textContent = "Este campo es obligatorio";
+        isValid = false;
+    }
+
+    // Descripción
+    if (descripcionInput.value.trim() === "") {
+        descripcionError.textContent = "Este campo es obligatorio";
+        isValid = false;
+    }
+    else if (descripcionInput.value.length > 350) {
+        descripcionError.textContent = "Límite de carácteres excedido ("+descripcionInput.value.length+" carácteres)";
+        isValid = false;
+    }
+
+    if (isValid) {
+        form.reset();
+        counter.textContent = "0 / 350";
+        alert("Formulario enviado correctamente.");
+    }
+});
+
 
     </script>
 </body>
