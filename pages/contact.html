@@ -214,7 +214,7 @@
                             <div class="error-message" id="descripcion-error"></div>
                             <textarea id="descripcion"
                                 placeholder="Háblanos brevemente sobre lo que necesitas. (Máximo 350 caracteres)"
-                                maxlength="350"></textarea>
+                                maxlength="3500"></textarea>
                             <div id="char-counter">0 / 350</div>
                         </div>
 
@@ -346,6 +346,13 @@
 
         // Contador
         descripcionInput.addEventListener("input", () => {
+            if(descripcionInput.value.length > 350) {
+                counter.style.color = "#ff3b3b";
+                descripcionError.textContent = "Límite de carácteres excedido (" + descripcionInput.value.length + " carácteres)";
+            } else {
+                counter.style.color = "#ccc";
+                descripcionError.textContent = "";
+            }
             counter.textContent = `${descripcionInput.value.length} / 350`;
         });
 
