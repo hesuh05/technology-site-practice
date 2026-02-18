@@ -342,7 +342,7 @@
 
         const counter = document.getElementById("char-counter");
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex = /^[A-Za-z0-9_\.-]+@([A-Za-z]+([A-Za-z]+(\.[A-Za-z]+)+))+$/;
 
         // Contador
         descripcionInput.addEventListener("input", () => {
@@ -355,6 +355,7 @@
             }
             counter.textContent = `${descripcionInput.value.length} / 350`;
         });
+
 
         // Validación
         form.addEventListener("submit", (e) => {
@@ -400,6 +401,8 @@
             } else if (parseInt(preguntaInput.value, 10) !== 12) {
                 preguntaError.textContent = "Respuesta incorrecta";
                 isValid = false;
+            } else {
+                preguntaError.textContent = ""
             }
 
             if (isValid) {
