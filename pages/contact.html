@@ -47,7 +47,7 @@
 
         #contact-form-container {
             width: 400px;
-            background: linear-gradient(#282828,#393A29);
+            background: linear-gradient(#282828, #393A29);
             padding: 2rem 3rem;
             border-radius: 20px;
             box-shadow: 0 0 20px 5px black;
@@ -220,18 +220,15 @@
 
                         <!-- Verificador humano -->
                         <div class="field-group">
-                            
-                            
-                                <label for="pregunta" style="text-align: center;">
-                                    Pregunta de seguridad: 
-                                    ¿Cuánto es 7 + 5?
-                                </label>
-                                <br>
-                                <div class="error-message" id="pregunta-error"></div>
-                                <input type="number" 
-                                       id="pregunta" 
-                                       name="pregunta" 
-                                       style="
+
+
+                            <label for="pregunta" style="text-align: center;">
+                                Pregunta de seguridad:
+                                ¿Cuánto es 7 + 5?
+                            </label>
+                            <br>
+                            <div class="error-message" id="pregunta-error"></div>
+                            <input type="number" id="pregunta" name="pregunta" style="
                                        background: black;
                                         border: none;
                                         padding: 0.8rem;
@@ -239,10 +236,8 @@
                                         border-radius: 6px;
                                         outline: none;
                                         font-size: 1rem;
-                                       "
-                                       placeholder="Tu respuesta"                                       
-                                       required>
-                            
+                                       " placeholder="Tu respuesta" required>
+
                         </div>
                         <br>
 
@@ -344,9 +339,28 @@
 
         const emailRegex = /^[A-Za-z0-9_\.-]+@([A-Za-z]+([A-Za-z]+(\.[A-Za-z]+)+))+$/;
 
+        function limpiarErrores() {
+            // Limpiar errores
+            emailError.textContent = "";
+            tipoError.textContent = "";
+            descripcionError.textContent = "";
+        }
+
+        // Limpiar mensaje de error al escribir
+        function applyCleanerListener(inputElement,errorElement) {
+            inputElement.addEventListener("input", () => {
+                errorElement.textContent = ""
+            })
+        }
+
+        // Implementación de listeners
+        [{input:emailInput,error:emailError}, {input:preguntaInput,error:preguntaError}].map(set=>{
+            applyCleanerListener(set.input,set.error)
+        })
+
         // Contador
         descripcionInput.addEventListener("input", () => {
-            if(descripcionInput.value.length > 350) {
+            if (descripcionInput.value.length > 350) {
                 counter.style.color = "#ff3b3b";
                 descripcionError.textContent = "Límite de carácteres excedido (" + descripcionInput.value.length + " carácteres)";
             } else {
@@ -364,9 +378,7 @@
             let isValid = true;
 
             // Limpiar errores
-            emailError.textContent = "";
-            tipoError.textContent = "";
-            descripcionError.textContent = "";
+            limpiarErrores()
 
             // Email vacío
             if (emailInput.value.trim() === "") {
@@ -406,6 +418,7 @@
             }
 
             if (isValid) {
+                limpiarErrores()
                 form.reset();
                 counter.textContent = "0 / 350";
                 alert("Formulario enviado correctamente.");
