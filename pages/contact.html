@@ -252,6 +252,28 @@
         </div>
     </div>
     <div id="modal-container">
+        <div class="modal-overlay" id="confirm-modal" aria-hidden="true" style="display:none;">
+            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+                <button class="modal-close" id="confirm-close" aria-label="Cerrar">×</button>
+                <h3 id="confirm-title">¿Está seguro que desea enviar el formulario?</h3>
+                <p>Por favor confirme que desea enviar la información proporcionada.</p>
+                <div class="modal-actions">
+                    <button class="btn btn-cancel" id="confirm-cancel">Cancelar</button>
+                    <button class="btn btn-continue" id="confirm-continue">Continuar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-overlay" id="success-modal" aria-hidden="true" style="display:none;">
+            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="success-title">
+                <button class="modal-close" id="success-close" aria-label="Cerrar">×</button>
+                <h3 id="success-title">Formulario Enviado!</h3>
+                <p>Gracias. Nos pondremos en contacto pronto.</p>
+                <div class="modal-actions">
+                    <button class="btn btn-ok" id="success-ok">Ok</button>
+                </div>
+            </div>
+        </div>
     </div>
     <script>
         // === ÍNDICE DEL SITIO ===
@@ -434,12 +456,54 @@
             }
 
             if (isValid) {
-                document.getElementById("contact-form-container").innerHTML = `<p style="text-align:center">Formulario enviado! <br> Nos pondremos en contacto pronto</p>`
-                limpiarErrores()
-                form.reset();
-                counter.textContent = "0 / 350";
-                alert("Formulario enviado correctamente.");
-                console.log('Usuario verificado');
+                const confirmModal = document.getElementById('confirm-modal');
+                const successModal = document.getElementById('success-modal');
+                const confirmCancel = document.getElementById('confirm-cancel');
+                const confirmContinue = document.getElementById('confirm-continue');
+                const confirmClose = document.getElementById('confirm-close');
+                const successOk = document.getElementById('success-ok');
+                const successClose = document.getElementById('success-close');
+
+                function openModal(modal) {
+                    modal.style.display = 'flex';
+                    modal.setAttribute('aria-hidden', 'false');
+                    document.body.style.overflow = 'hidden';
+                }
+
+                function closeModal(modal) {
+                    modal.style.display = 'none';
+                    modal.setAttribute('aria-hidden', 'true');
+                    document.body.style.overflow = '';
+                }
+
+                openModal(confirmModal);
+
+                const onCancel = () => closeModal(confirmModal);
+                const onCloseConfirm = () => closeModal(confirmModal);
+                const onContinue = () => {
+                    closeModal(confirmModal);
+                    limpiarErrores();
+                    form.reset();
+                    counter.textContent = '0 / 350';
+                    openModal(successModal);
+                    console.log('Usuario verificado');
+                };
+                const onSuccessClose = () => closeModal(successModal);
+
+                confirmCancel.addEventListener('click', onCancel, { once: true });
+                confirmClose.addEventListener('click', onCloseConfirm, { once: true });
+                confirmContinue.addEventListener('click', onContinue, { once: true });
+
+                successOk.addEventListener('click', onSuccessClose, { once: true });
+                successClose.addEventListener('click', onSuccessClose, { once: true });
+
+                // Close when clicking outside the modal content
+                confirmModal.addEventListener('click', (ev) => {
+                    if (ev.target === confirmModal) closeModal(confirmModal);
+                });
+                successModal.addEventListener('click', (ev) => {
+                    if (ev.target === successModal) closeModal(successModal); document.getElementById("contact-form-container").innerHTML = "<p style='text-align:center'>Formulario Enviado!</p>";
+                });
             }
         });
 
