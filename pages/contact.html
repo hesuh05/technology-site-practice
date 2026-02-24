@@ -88,7 +88,7 @@
             transition: 0.3s ease;
         }
 
-        #contact-form button:hover {
+        #contact-form button.hover {
             background: #ffd700;
             box-shadow: 0 0 20px gold;
         }
@@ -189,7 +189,7 @@
 
                 <!-- ===== FORMULARIO AGREGADO ===== -->
                 <div id="contact-form-container">
-                    <h2 style="font-size: 2rem;color: white;font-weight: normal;">
+                    <h2 style="font-size: 2rem;color: white;font-weight: normal;text-align: center;">
                         Envíanos un correo
                     </h2>
 
@@ -241,7 +241,7 @@
                         </div>
                         <br>
 
-                        <button type="submit">Enviar</button>
+                        <button type="submit" id="form-btn-submit">Enviar</button>
 
                     </form>
 
@@ -251,7 +251,8 @@
             </div>
         </div>
     </div>
-
+    <div id="modal-container">
+    </div>
     <script>
         // === ÍNDICE DEL SITIO ===
         const siteIndex = [
@@ -335,6 +336,8 @@
         const preguntaInput = document.getElementById('pregunta');
         const preguntaError = document.getElementById('pregunta-error');
 
+        const cta = document.getElementById("form-btn-submit")
+
         const counter = document.getElementById("char-counter");
 
         const emailRegex = /^[A-Za-z0-9_\.-]+@([A-Za-z]+([A-Za-z]+(\.[A-Za-z]+)+))+$/;
@@ -370,6 +373,19 @@
             counter.textContent = `${descripcionInput.value.length} / 350`;
         });
 
+        // Enviar formulario 
+        document.addEventListener("keyup",e=>{
+            if(e.key=="Enter"){
+                form.requestSubmit()
+            }
+        })
+
+        cta.addEventListener("mouseleave",()=>{
+            cta.classList.remove("hover")
+        })
+        cta.addEventListener("mouseover",()=>{
+            cta.classList.add("hover")
+        })
 
         // Validación
         form.addEventListener("submit", (e) => {
@@ -418,6 +434,7 @@
             }
 
             if (isValid) {
+                document.getElementById("contact-form-container").innerHTML = `<p style="text-align:center">Formulario enviado! <br> Nos pondremos en contacto pronto</p>`
                 limpiarErrores()
                 form.reset();
                 counter.textContent = "0 / 350";

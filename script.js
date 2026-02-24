@@ -24,7 +24,7 @@ function applyTheme(theme) {
     if (!toggle) return;
 
     const isLight = defaultTheme === "light";
-    toggle.textContent = isLight ? "☀️ Bright" : "🌙 Dark";
+    toggle.textContent = isLight ? "☀️ Luz" : "🌙 Noche";
     toggle.setAttribute("aria-label", isLight ? "Cambiar a modo oscuro" : "Cambiar a modo brillante");
 }
 
