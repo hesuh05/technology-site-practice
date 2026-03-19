@@ -75,11 +75,9 @@ body {
     font-family: "Instrument Sans";
     min-height: 100vh;
     display: flex;
-    overflow-y: scroll;
     background-color: var(--bg-main);
     color: var(--text-primary);
     flex-direction: column;
-    overflow-x: hidden;
 }
 
 /* ======================
@@ -89,12 +87,13 @@ body {
 #navbar {
     view-transition-name: navbar;
     display: flex;
+    position: sticky;
+    top: 0;
     align-items: stretch;
     height: 90px;
     background-color: var(--accent);
 }
 
-/* NORMALIZACIÓN TOTAL */
 .navbar-button {
     display: flex;
     align-items: center;
